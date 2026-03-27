@@ -1,46 +1,41 @@
 // App.js
+// App.js
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import Header from "./components/Header";
-import Profile from "./components/Profile";
-import ActionButton from "./components/ActionButton";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import AppNavigator from "./navigation/AppNavigator";
 
+// Root component: holds tasks state and passes it into navigator
 export default function App() {
-  const [greeting, setGreeting] = useState("");
-
-  const toggleGreeting = () => {
-    setGreeting(prev =>
-      prev === "" ? "Hello! Welcome to React Native" : ""
-    );
-  };
+  const [tasks, setTasks] = useState([
+    {
+      id: "1",
+      title: "Buy Groceries",
+      description: "Milk, eggs, bread, fruit",
+      category: "Home",
+      dateTime: new Date().toISOString(),
+      image: require("./assets/home.jpg")
+    },
+    {
+      id: "2",
+      title: "Finish React Native Exam",
+      description: "Complete Task Manager app",
+      category: "Work",
+      dateTime: new Date().toISOString(),
+      image: require("./assets/work.jpg")
+    },
+    {
+      id: "3",
+      title: "Go to the gym",
+      description: "Leg day workout",
+      category: "Personal",
+      dateTime: new Date().toISOString(),
+      image: require("./assets/personal.jpg")
+    }
+  ]);
 
   return (
-    <View style={styles.container}>
-      <Header title="My First React Native App" />
-
-      <Profile
-        name="Ruben"
-        image={require("./assets/profile.jpg")}
-      />
-
-      <Text style={styles.greeting}>{greeting}</Text>
-
-      <ActionButton onPress={toggleGreeting} />
-    </View>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AppNavigator tasks={tasks} setTasks={setTasks} />
+    </GestureHandlerRootView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f2f2f2",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20
-  },
-  greeting: {
-    fontSize: 18,
-    marginVertical: 20,
-    color: "#333"
-  }
-});
